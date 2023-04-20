@@ -1127,6 +1127,8 @@ def _find_module_utils(module_name, b_module_data, module_path, module_args, tas
 
         zipdata = None
         # Optimization -- don't lock if the module has already been cached
+
+        now = None
         if os.path.exists(cached_module_filename):
             display.debug('ANSIBALLZ: using cached module: %s' % cached_module_filename)
             with open(cached_module_filename, 'rb') as module_data:
@@ -1241,7 +1243,8 @@ def _find_module_utils(module_name, b_module_data, module_path, module_args, tas
         else:
             coverage = ''
 
-        now = datetime.datetime.utcnow()
+        if now == None:
+            now = datetime.datetime.utcnow()
         if now.year < 1980:
             raise AnsibleError('Cannot create zipfile due to pre-1980 configured date: {now}')
         output.write(to_bytes(ACTIVE_ANSIBALLZ_TEMPLATE % dict(
