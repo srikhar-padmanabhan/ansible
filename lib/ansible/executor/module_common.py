@@ -1154,6 +1154,9 @@ def _find_module_utils(module_name, b_module_data, module_path, module_args, tas
                     display.debug('ANSIBALLZ: Creating module')
                     # Create the module zip data
                     zipoutput = BytesIO()
+
+                    # Set now to when ZipFile is created
+                    now = datetime.datetime.utcnow()
                     zf = zipfile.ZipFile(zipoutput, mode='w', compression=compression_method)
 
                     # walk the module imports, looking for module_utils to send- they'll be added to the zipfile
