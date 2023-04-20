@@ -1242,6 +1242,8 @@ def _find_module_utils(module_name, b_module_data, module_path, module_args, tas
             coverage = ''
 
         now = datetime.datetime.utcnow()
+        if now.year < 1980:
+            raise AnsibleError('Cannot create zipfile due to pre-1980 configured date: {now}')
         output.write(to_bytes(ACTIVE_ANSIBALLZ_TEMPLATE % dict(
             zipdata=zipdata,
             ansible_module=module_name,
